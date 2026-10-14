@@ -230,6 +230,55 @@
     .brand-logo-box img{ max-width:124px; max-height:50px; }
     .brand-logo-box svg{ width:124px; max-height:50px; }
   }
+
+  /* legal: footer links, modals, cookie banner */
+  .legal-row{ display:flex; flex-wrap:wrap; gap:10px 22px; justify-content:center; }
+  footer .wrap{ flex-direction:column; align-items:center; gap:18px; }
+  footer .legal-row{ order:3; width:100%; border-top:1px solid var(--line); padding-top:18px; }
+  .legal-link{ background:none; border:none; padding:0; font:inherit; font-size:13px; color:var(--muted); cursor:pointer; text-decoration:underline; text-underline-offset:2px; }
+  .legal-link:hover{ color:var(--green-dark); }
+  .legal-link:focus-visible{ outline:2px solid var(--green); outline-offset:2px; border-radius:2px; }
+
+  .legal-modal{ position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center; padding:24px; }
+  .legal-modal.is-open{ display:flex; }
+  .legal-modal-backdrop{ position:absolute; inset:0; background:rgba(32,35,44,0.55); }
+  .legal-modal-card{
+    position:relative; background:var(--paper); color:var(--ink); border-radius:20px;
+    max-width:640px; width:100%; max-height:min(80vh,720px); overflow-y:auto;
+    padding:36px; box-shadow:0 20px 60px rgba(0,0,0,0.25);
+  }
+  .legal-modal-card h2{ font-size:24px; margin-bottom:6px; padding-right:28px; }
+  .legal-modal-card h3{ font-size:15.5px; margin:22px 0 6px; color:var(--charcoal); }
+  .legal-modal-card p{ font-size:14.5px; line-height:1.65; color:var(--muted); margin-bottom:4px; }
+  .legal-modal-card ul{ margin:6px 0 4px; padding-left:20px; }
+  .legal-modal-card li{ font-size:14.5px; line-height:1.65; color:var(--muted); margin-bottom:4px; }
+  .legal-updated{ font-size:12.5px; color:var(--muted); margin-bottom:14px; }
+  .legal-lang-note{
+    font-size:12.5px; font-style:italic; color:var(--muted); border:1px solid var(--line);
+    background:var(--paper-2); border-radius:10px; padding:10px 14px; margin-bottom:18px;
+  }
+  .legal-modal-close{
+    position:absolute; top:20px; right:20px; width:32px; height:32px; border-radius:50%;
+    border:1px solid var(--line); background:var(--paper-2); color:var(--charcoal);
+    font-size:18px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .legal-modal-close:hover{ border-color:var(--green); color:var(--green-dark); }
+  .legal-modal-close:focus-visible{ outline:2px solid var(--green); outline-offset:2px; }
+
+  .cookie-banner{
+    position:fixed; left:16px; right:16px; bottom:16px; z-index:190;
+    max-width:680px; margin:0 auto; display:none; gap:16px; align-items:center; flex-wrap:wrap;
+    background:var(--charcoal); color:#F2F1EE; border-radius:16px; padding:18px 22px;
+    box-shadow:0 12px 40px rgba(0,0,0,0.3);
+  }
+  .cookie-banner.is-open{ display:flex; }
+  .cookie-banner p{ font-size:13.5px; line-height:1.55; color:#C6C4BD; margin:0; flex:1 1 320px; }
+  .cookie-banner a{ color:#9FD196; text-decoration:underline; cursor:pointer; }
+  .cookie-banner .btn-primary{ flex-shrink:0; padding:10px 20px; font-size:14px; }
+  @media (max-width:520px){
+    .legal-modal-card{ padding:26px; border-radius:16px; }
+    .cookie-banner{ left:12px; right:12px; bottom:12px; padding:16px; }
+  }
 </style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -488,8 +537,123 @@
   <div class="wrap">
     <span class="fine">© 2026 Velotec Argentina S.A.</span>
     <span class="fine" data-en="Boutique distribution of global technology and health brands in 9 countries across LATAM.">Distribución boutique de marcas globales de tecnología y salud en 9 países de LATAM.</span>
+    <div class="legal-row">
+      <button type="button" class="legal-link" data-modal-open="modal-privacidad" data-en="Privacy Policy">Política de Privacidad</button>
+      <button type="button" class="legal-link" data-modal-open="modal-terminos" data-en="Terms &amp; Conditions">Términos y Condiciones</button>
+      <button type="button" class="legal-link" data-modal-open="modal-cookies" data-en="Cookie Policy">Política de Cookies</button>
+      <button type="button" class="legal-link" data-modal-open="modal-reembolso" data-en="Refund Policy">Política de Contra Reembolso</button>
+      <button type="button" class="legal-link" data-modal-open="modal-formularios" data-en="Form Consent">Consentimiento de Formularios</button>
+      <button type="button" class="legal-link" id="cookie-preferences" data-en="Cookie Preferences">Preferencias de Cookies</button>
+    </div>
   </div>
 </footer>
+
+<div class="legal-modal" id="modal-privacidad" role="dialog" aria-modal="true" aria-labelledby="t-privacidad">
+  <div class="legal-modal-backdrop" data-modal-close></div>
+  <div class="legal-modal-card">
+    <button type="button" class="legal-modal-close" data-modal-close aria-label="Cerrar">&times;</button>
+    <h2 id="t-privacidad">Política de Privacidad</h2>
+    <p class="legal-updated">Última actualización: octubre de 2026</p><p class="legal-lang-note">Este documento rige en español, conforme a la legislación argentina aplicable a Velotec Argentina S.A. &mdash; This document is available in Spanish only, as it is governed by Argentine law.</p>
+    <h3>1. Responsable</h3>
+    <p>El responsable del tratamiento de los datos recabados a través de este sitio es Velotec Argentina S.A. ("Velotec"), con sede en Buenos Aires, Argentina. Ante cualquier consulta sobre esta política podés escribir a consultas@velotec.com.ar.</p>
+    <h3>2. Qué datos recopilamos</h3>
+    <p>Este sitio es institucional: no procesa pagos ni pedidos. Los únicos datos personales que recibimos son los que vos nos enviás voluntariamente por correo electrónico o por un formulario de contacto (nombre, email y el contenido de tu mensaje). Además, tu navegador guarda localmente tu preferencia de idioma (ES/EN) y tu respuesta al aviso de cookies; esa información queda en tu dispositivo y no la recibimos ni almacenamos en nuestros servidores.</p>
+    <h3>3. Para qué usamos tus datos</h3>
+    <p>Usamos los datos de contacto exclusivamente para responder tu consulta, evaluar oportunidades comerciales o de distribución, y mantener comunicación con marcas y clientes. No los utilizamos para armar perfiles de navegación ni se los cedemos a terceros con fines publicitarios.</p>
+    <h3>4. Con quién compartimos tus datos</h3>
+    <p>No vendemos ni cedemos tus datos personales a terceros. Solo los compartimos cuando una autoridad competente lo requiera por ley, o con proveedores que nos asisten técnicamente (por ejemplo, el servicio de correo electrónico), bajo deber de confidencialidad.</p>
+    <h3>5. Tus derechos</h3>
+    <p>De acuerdo con la Ley 25.326 de Protección de los Datos Personales, tenés derecho a acceder, rectificar, actualizar y solicitar la supresión de tus datos. Para ejercerlos, escribí a consultas@velotec.com.ar. La Agencia de Acceso a la Información Pública (AAIP), www.argentina.gob.ar/aaip, es la autoridad de control en la materia y recibe reclamos y denuncias.</p>
+    <h3>6. Conservación y seguridad</h3>
+    <p>Conservamos tus datos solo durante el tiempo necesario para atender tu consulta o cumplir una obligación legal. El sitio se sirve bajo conexión cifrada (HTTPS) y aplicamos medidas razonables para proteger la información que nos enviás, aunque ningún medio de transmisión por internet es absolutamente seguro.</p>
+    <h3>7. Menores de edad</h3>
+    <p>Este sitio está dirigido a público mayor de edad y a empresas. No recopilamos a sabiendas datos de menores de edad.</p>
+    <h3>8. Cambios a esta política</h3>
+    <p>Podemos actualizar esta política para reflejar cambios legales u operativos. La fecha de "Última actualización" indica la versión vigente.</p>
+  </div>
+</div>
+<div class="legal-modal" id="modal-terminos" role="dialog" aria-modal="true" aria-labelledby="t-terminos">
+  <div class="legal-modal-backdrop" data-modal-close></div>
+  <div class="legal-modal-card">
+    <button type="button" class="legal-modal-close" data-modal-close aria-label="Cerrar">&times;</button>
+    <h2 id="t-terminos">Términos y Condiciones</h2>
+    <p class="legal-updated">Última actualización: octubre de 2026</p><p class="legal-lang-note">Este documento rige en español, conforme a la legislación argentina aplicable a Velotec Argentina S.A. &mdash; This document is available in Spanish only, as it is governed by Argentine law.</p>
+    <h3>1. Aceptación</h3>
+    <p>Al navegar velotec.com.ar aceptás estos términos. Si no estás de acuerdo, te pedimos que no utilices el sitio.</p>
+    <h3>2. Objeto del sitio</h3>
+    <p>Este es el sitio institucional de Velotec Argentina S.A., distribuidor boutique de marcas globales de tecnología y salud en LATAM. El sitio tiene fines informativos y comerciales: presenta qué hacemos, qué marcas representamos y cómo contactarnos. No es una tienda online: no procesá pagos ni envíos.</p>
+    <h3>3. Dónde se compran los productos</h3>
+    <p>Los productos de las marcas que representamos se comercializan a través de los canales oficiales de cada marca (tiendas propias online y/o sus cuentas oficiales en marketplaces como Mercado Libre). Cada canal de venta tiene sus propios términos, precios y políticas de envío, cambio y garantía, que prevalecen sobre este documento para esa compra en particular.</p>
+    <h3>4. Propiedad intelectual</h3>
+    <p>Los textos, el diseño, el isotipo y la marca Velotec son propiedad de Velotec Argentina S.A. Las marcas de terceros mencionadas o exhibidas en este sitio (por ejemplo Amazfit, Noise, Omron, Plaud y Anker) pertenecen a sus respectivos titulares y se muestran únicamente para informar la relación comercial de distribución, sin que ello implique cesión de derechos.</p>
+    <h3>5. Enlaces a sitios de terceros</h3>
+    <p>Este sitio puede enlazar a tiendas oficiales de las marcas que representamos u otros sitios externos. No controlamos ni nos responsabilizamos por el contenido, la disponibilidad ni las prácticas de privacidad de esos sitios.</p>
+    <h3>6. Limitación de responsabilidad</h3>
+    <p>Hacemos un esfuerzo razonable para que la información del sitio sea correcta y esté actualizada, pero no garantizamos la ausencia total de errores. Velotec no será responsable por daños derivados del uso del sitio, salvo los que la ley no permita limitar.</p>
+    <h3>7. Ley aplicable</h3>
+    <p>Estos términos se rigen por las leyes de la República Argentina. Para cualquier controversia, las partes se someten a los tribunales ordinarios competentes de la Ciudad Autónoma de Buenos Aires.</p>
+    <h3>8. Contacto</h3>
+    <p>Consultas sobre estos términos: consultas@velotec.com.ar.</p>
+  </div>
+</div>
+<div class="legal-modal" id="modal-cookies" role="dialog" aria-modal="true" aria-labelledby="t-cookies">
+  <div class="legal-modal-backdrop" data-modal-close></div>
+  <div class="legal-modal-card">
+    <button type="button" class="legal-modal-close" data-modal-close aria-label="Cerrar">&times;</button>
+    <h2 id="t-cookies">Política de Cookies</h2>
+    <p class="legal-updated">Última actualización: octubre de 2026</p><p class="legal-lang-note">Este documento rige en español, conforme a la legislación argentina aplicable a Velotec Argentina S.A. &mdash; This document is available in Spanish only, as it is governed by Argentine law.</p>
+    <h3>1. Qué son las cookies</h3>
+    <p>Las cookies son pequeños archivos que un sitio puede guardar en tu navegador para recordar información entre visitas. "Almacenamiento local" (localStorage) cumple una función parecida, pero los datos quedan únicamente en tu dispositivo.</p>
+    <h3>2. Qué usa hoy este sitio</h3>
+    <p>velotec.com.ar no instala cookies de seguimiento ni de publicidad, y no utiliza herramientas de analítica de terceros. Guarda dos datos en el almacenamiento local de tu navegador: el idioma que elegís (ES/EN) y tu respuesta al aviso de cookies. Ninguno de los dos viaja a nuestros servidores ni se comparte con terceros.</p>
+    <h3>3. Si esto cambia</h3>
+    <p>Si en el futuro incorporamos herramientas de medición o publicidad que usen cookies, vamos a actualizar esta política antes de activarlas y te lo vamos a pedir de nuevo a través del aviso de cookies.</p>
+    <h3>4. Cómo controlar el almacenamiento local</h3>
+    <p>Podés borrar el almacenamiento local y las cookies de cualquier sitio desde la configuración de privacidad de tu navegador. Si lo hacés, la próxima vez que entres te vamos a volver a preguntar el idioma y mostrar el aviso de cookies.</p>
+    <h3>5. Contacto</h3>
+    <p>Consultas sobre esta política: consultas@velotec.com.ar.</p>
+  </div>
+</div>
+<div class="legal-modal" id="modal-reembolso" role="dialog" aria-modal="true" aria-labelledby="t-reembolso">
+  <div class="legal-modal-backdrop" data-modal-close></div>
+  <div class="legal-modal-card">
+    <button type="button" class="legal-modal-close" data-modal-close aria-label="Cerrar">&times;</button>
+    <h2 id="t-reembolso">Política de Cambios, Devoluciones y Reembolso</h2>
+    <p class="legal-updated">Última actualización: octubre de 2026</p><p class="legal-lang-note">Este documento rige en español, conforme a la legislación argentina aplicable a Velotec Argentina S.A. &mdash; This document is available in Spanish only, as it is governed by Argentine law.</p>
+    <h3>1. Alcance</h3>
+    <p>Este sitio institucional no procesa compras. Esta política describe las condiciones generales que Velotec Argentina S.A. aplica como distribuidor en las compras realizadas a través de los canales oficiales de las marcas que representa (tiendas oficiales online y Mercado Libre). Cada canal puede precisar detalles adicionales al momento de la compra.</p>
+    <h3>2. Cambios</h3>
+    <p>Disponés de 30 días corridos desde la recepción del producto para solicitar un cambio, escribiendo a consultas@velotec.com.ar. El producto debe estar en las mismas condiciones en que fue enviado: sin uso, con su embalaje original, accesorios, manuales y garantía.</p>
+    <h3>3. Derecho de arrepentimiento (devolución)</h3>
+    <p>Conforme al artículo 34 de la Ley 24.240 de Defensa del Consumidor, tenés derecho a revocar la compra dentro de los 10 días corridos desde la recepción del producto, sin costo y sin necesidad de justificar el motivo. Una vez verificado el estado del producto devuelto, reintegramos el importe por el mismo medio de pago utilizado en la compra, dentro de los 7 días hábiles.</p>
+    <h3>4. Garantía</h3>
+    <p>Los productos cuentan con garantía de 1 año desde la fecha de compra, que cubre defectos de fabricación. No cubre roturas por mal uso, desgaste normal o manipulación indebida. Ante una falla cubierta, reparamos o reemplazamos el producto; la garantía no incluye reintegro de dinero, salvo que corresponda por derecho de arrepentimiento.</p>
+    <h3>5. Costos de envío</h3>
+    <p>El primer cambio o devolución no tiene cargo de envío para vos. Si el producto llegó dañado o con una falla de fábrica, Velotec se hace cargo del envío. A partir de una segunda solicitud sobre la misma compra, el envío queda a cargo del comprador.</p>
+    <h3>6. Cómo iniciar un reclamo</h3>
+    <p>Escribí a consultas@velotec.com.ar indicando el canal y número de compra. Un asesor te va a confirmar los pasos a seguir según la marca y el canal de venta.</p>
+  </div>
+</div>
+<div class="legal-modal" id="modal-formularios" role="dialog" aria-modal="true" aria-labelledby="t-formularios">
+  <div class="legal-modal-backdrop" data-modal-close></div>
+  <div class="legal-modal-card">
+    <button type="button" class="legal-modal-close" data-modal-close aria-label="Cerrar">&times;</button>
+    <h2 id="t-formularios">Consentimiento de Formularios</h2>
+    <p class="legal-updated">Última actualización: octubre de 2026</p><p class="legal-lang-note">Este documento rige en español, conforme a la legislación argentina aplicable a Velotec Argentina S.A. &mdash; This document is available in Spanish only, as it is governed by Argentine law.</p>
+    <h3>1. Qué pasa cuando nos escribís</h3>
+    <p>Cuando completás un formulario de contacto o nos escribís directamente por correo a consultas@velotec.com.ar, nos estás enviando voluntariamente datos personales como tu nombre, tu email y el contenido de tu mensaje.</p>
+    <h3>2. Tu consentimiento</h3>
+    <p>Al enviar ese formulario o correo, declarás que los datos son correctos y prestás tu consentimiento libre, expreso e informado para que Velotec Argentina S.A. los trate con el único fin de responder tu consulta y, si correspondiera, evaluar una oportunidad comercial o de distribución con vos o tu empresa. El tratamiento de estos datos se rige por nuestra Política de Privacidad.</p>
+    <h3>3. Cómo retirar tu consentimiento</h3>
+    <p>Podés retirar tu consentimiento en cualquier momento escribiendo a consultas@velotec.com.ar. Vamos a dejar de usar tus datos para el fin original, salvo que debamos conservarlos por una obligación legal.</p>
+    <h3>4. Conservación</h3>
+    <p>Guardamos los datos del formulario mientras dure el intercambio y el tiempo razonable posterior para fines administrativos, salvo que se inicie una relación comercial que justifique un plazo mayor.</p>
+  </div>
+</div>
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-live="polite">
+  <p data-en="We use local browser storage (no tracking cookies) to remember your language and your choice on this notice. Learn more in our <a data-modal-open=&quot;modal-cookies&quot;>Cookie Policy</a>.">Usamos almacenamiento local del navegador (no cookies de seguimiento) para recordar tu idioma y tu elección sobre este aviso. Leé más en nuestra <a data-modal-open="modal-cookies">Política de Cookies</a>.</p>
+  <button type="button" class="btn btn-primary" id="cookie-accept" data-en="Accept">Aceptar</button>
+</div>
 
 <script>
 (function(){
@@ -515,6 +679,57 @@
     ? stored
     : ((navigator.language || '').toLowerCase().indexOf('en') === 0 ? 'en' : 'es');
   applyLang(initial);
+
+  // --- legal modals ---
+  function openModal(id){
+    var m = document.getElementById(id);
+    if(!m) return;
+    m.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(m){
+    m.classList.remove('is-open');
+    if(!document.querySelector('.legal-modal.is-open')){
+      document.body.style.overflow = '';
+    }
+  }
+  document.addEventListener('click', function(e){
+    var opener = e.target.closest('[data-modal-open]');
+    if(opener){
+      e.preventDefault();
+      openModal(opener.getAttribute('data-modal-open'));
+      return;
+    }
+    var closer = e.target.closest('[data-modal-close]');
+    if(closer){
+      var modal = closer.closest('.legal-modal');
+      if(modal) closeModal(modal);
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.legal-modal.is-open').forEach(closeModal);
+    }
+  });
+
+  // --- cookie consent banner ---
+  var cookieBanner = document.getElementById('cookie-banner');
+  var cookieAccept = document.getElementById('cookie-accept');
+  var cookiePrefs = document.getElementById('cookie-preferences');
+  function showCookieBanner(){ if(cookieBanner) cookieBanner.classList.add('is-open'); }
+  function hideCookieBanner(){ if(cookieBanner) cookieBanner.classList.remove('is-open'); }
+  var cookieConsent = null;
+  try{ cookieConsent = localStorage.getItem('velotec-cookie-consent'); }catch(e){}
+  if(cookieConsent !== 'accepted'){ showCookieBanner(); }
+  if(cookieAccept){
+    cookieAccept.addEventListener('click', function(){
+      try{ localStorage.setItem('velotec-cookie-consent', 'accepted'); }catch(e){}
+      hideCookieBanner();
+    });
+  }
+  if(cookiePrefs){
+    cookiePrefs.addEventListener('click', function(){ showCookieBanner(); });
+  }
 })();
 </script>
 
